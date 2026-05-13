@@ -29,7 +29,7 @@ export default function Home() {
       <p className="text-ink-muted text-base mb-10">记录打动你的每一句话</p>
 
       {/* Quick entry cards */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
         <Link
           href="/sentences"
           className="flex-1 rounded-xl border border-border bg-paper px-6 py-5 text-center shadow-md shadow-stone-200/50 hover:shadow-lg hover:border-accent/30 transition-all no-underline"
@@ -38,11 +38,18 @@ export default function Home() {
           <span className="text-sm text-ink-muted">浏览所有记录</span>
         </Link>
         <Link
-          href="/sentences/new"
+          href="/articles"
+          className="flex-1 rounded-xl border border-border bg-paper px-6 py-5 text-center shadow-md shadow-stone-200/50 hover:shadow-lg hover:border-accent/30 transition-all no-underline"
+        >
+          <span className="block font-hand text-lg text-accent mb-1">文章</span>
+          <span className="text-sm text-ink-muted">阅读和浏览</span>
+        </Link>
+        <Link
+          href="/record"
           className="flex-1 rounded-xl border border-border bg-paper px-6 py-5 text-center shadow-md shadow-stone-200/50 hover:shadow-lg hover:border-accent/30 transition-all no-underline"
         >
           <span className="block font-hand text-lg text-accent mb-1">记录</span>
-          <span className="text-sm text-ink-muted">记下新的句子</span>
+          <span className="text-sm text-ink-muted">句子或文章</span>
         </Link>
         <Link
           href="/search"

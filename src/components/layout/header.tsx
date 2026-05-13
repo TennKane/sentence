@@ -36,6 +36,17 @@ export function Header() {
               句子
             </Link>
             <Link
+              href="/articles"
+              className={cn(
+                "transition-colors",
+                isActive("/articles")
+                  ? "text-accent font-medium"
+                  : "hover:text-accent",
+              )}
+            >
+              文章
+            </Link>
+            <Link
               href="/search"
               className={cn(
                 "transition-colors",
@@ -47,10 +58,10 @@ export function Header() {
               搜索
             </Link>
             <Link
-              href="/sentences/new"
+              href="/record"
               className={cn(
                 "rounded-full px-4 py-1.5 text-sm text-white no-underline transition-colors",
-                isActive("/sentences/new")
+                isActive("/record")
                   ? "bg-accent-dark"
                   : "bg-accent hover:bg-accent-dark",
               )}

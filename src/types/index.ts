@@ -1,3 +1,13 @@
+export interface Article {
+  id: number;
+  title: string;
+  content: string;
+  source: string | null;
+  tags: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Sentence {
   id: number;
   content: string;
