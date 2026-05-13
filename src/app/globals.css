@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #fef3c7;
+  --color-paper-dark: #d4a373;
+  --color-paper-light: #fffbeb;
+  --color-ink: #292524;
+  --color-ink-light: #57534e;
+  --color-ink-muted: #a8a29e;
+  --color-accent: #b45309;
+  --color-accent-light: #d97706;
+  --color-accent-dark: #78350f;
+  --color-border: #d6d3d1;
+  --color-border-light: #e7e5e4;
+
+  --font-sans: "Noto Serif SC", serif;
+  --font-hand: "Ma Shan Zheng", cursive;
+  --font-mono: "Geist Mono", monospace;
+}
+
+body {
+  background-color: var(--color-paper-light);
+  color: var(--color-ink);
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cre x='0' y='0' width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* Paper texture overlay for cards and containers */
+.paper-texture {
+  position: relative;
+}
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cre x='0' y='0' width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  pointer-events: none;
+  border-radius: inherit;
+}
