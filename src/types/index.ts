@@ -33,6 +33,27 @@ export interface SearchResponse {
   processingTimeMs: number;
 }
 
+export interface MatchedSentence {
+  text: string;
+  reason: string;
+}
+
+export interface ArticleSearchMatch {
+  id: number;
+  title: string;
+  content: string;
+  source: string | null;
+  tags: string | null;
+  reason: string;
+  matchedSentences: MatchedSentence[];
+}
+
+export interface ArticleSearchResponse {
+  matches: ArticleSearchMatch[];
+  totalProcessed: number;
+  processingTimeMs: number;
+}
+
 export interface ApiError {
   error: string;
 }
