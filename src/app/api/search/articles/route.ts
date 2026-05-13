@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     .select()
     .from(articles)
     .orderBy(desc(articles.createdAt))
-    .limit(200);
+    .limit(10000);
 
   if (rows.length === 0) {
     return NextResponse.json({

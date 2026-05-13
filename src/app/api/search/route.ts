@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     .from(sentences)
     .where(where)
     .orderBy(desc(sentences.createdAt))
-    .limit(200);
+    .limit(10000);
 
   if (rows.length === 0) {
     return NextResponse.json({
