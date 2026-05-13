@@ -3,7 +3,8 @@ import { db } from "@/lib/db";
 import { sentences } from "@/lib/db/schema";
 import { like, desc, sql } from "drizzle-orm";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const API_KEY = process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN;
+const BASE_URL = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com";
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -15,18 +16,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "请输入搜索描述" }, { status: 400 });
   }
 
-  if (!ANTHROPIC_API_KEY) {
+  if (!API_KEY) {
     return NextResponse.json(
-      { error: "AI 搜索未配置（缺少 ANTHROPIC_API_KEY）" },
+      { error: "搜索未配置（缺少 API key）" },
       { status: 500 },
     );
   }
 
   // Fetch sentences from DB
   const conditions = [];
-  if (tag) {
-    conditions.push(like(sentences.tags, `%${tag}%`));
-  }
+  if (tag) conditions.push(like(sentences.tags, `%${tag}%`));
 
   const where = conditions.length > 0 ? sql.join(conditions, sql` AND `) : undefined;
 
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Build the prompt for Claude
+  // Build the prompt
   const sentenceList = rows
     .map(
       (s, i) =>
@@ -64,12 +63,12 @@ export async function POST(request: NextRequest) {
 
   try {
     const response = await fetch(
-      "https://api.anthropic.com/v1/messages",
+      `${BASE_URL}/v1/messages`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": ANTHROPIC_API_KEY,
+          "x-api-key": API_KEY,
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
@@ -83,9 +82,9 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error("Claude API error:", response.status, errText);
+      console.error("API error:", response.status, errText);
       return NextResponse.json(
-        { error: "AI 搜索服务调用失败" },
+        { error: "搜索服务调用失败" },
         { status: 502 },
       );
     }
@@ -93,16 +92,12 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     const content = data.content?.[0]?.text ?? "[]";
 
-    // Parse Claude's JSON response
     let matches: { index: number; reason: string }[] = [];
     try {
-      // Try to extract JSON array from the response
       const jsonMatch = content.match(/\[[\s\S]*\]/);
-      if (jsonMatch) {
-        matches = JSON.parse(jsonMatch[0]);
-      }
+      if (jsonMatch) matches = JSON.parse(jsonMatch[0]);
     } catch {
-      // If parsing fails, return empty
+      // ignore parse errors
     }
 
     const result = matches
