@@ -30,10 +30,10 @@ export function ArticleCard({ article, onDelete }: ArticleCardProps) {
             <h3 className="text-lg font-semibold text-ink hover:text-accent transition-colors truncate">
               {article.title}
             </h3>
+            <p className="mt-1 line-clamp-2 text-sm text-ink-light leading-relaxed group-hover:text-ink transition-colors">
+              {article.content}
+            </p>
           </Link>
-          <p className="mt-1 line-clamp-2 text-sm text-ink-light leading-relaxed">
-            {article.content}
-          </p>
         </div>
       </div>
 

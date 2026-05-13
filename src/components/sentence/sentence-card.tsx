@@ -18,20 +18,22 @@ export function SentenceCard({ sentence, onDelete }: SentenceCardProps) {
 
   return (
     <PaperCard elevation="raised" className="group">
-      <div className="relative">
-        {/* Quote mark decoration */}
-        <span className="absolute -top-2 -left-1 font-hand text-4xl text-accent/20 leading-none select-none">
-          &ldquo;
-        </span>
+      <Link href={`/sentences/${sentence.id}`} className="block no-underline">
+        <div className="relative">
+          {/* Quote mark decoration */}
+          <span className="absolute -top-2 -left-1 font-hand text-4xl text-accent/20 leading-none select-none">
+            &ldquo;
+          </span>
 
-        <p className="pl-4 text-lg leading-relaxed text-ink">
-          {sentence.content}
-        </p>
+          <p className="pl-4 text-lg leading-relaxed text-ink group-hover:text-accent transition-colors">
+            {sentence.content}
+          </p>
 
-        <span className="absolute -bottom-4 -right-1 font-hand text-4xl text-accent/20 leading-none select-none">
-          &rdquo;
-        </span>
-      </div>
+          <span className="absolute -bottom-4 -right-1 font-hand text-4xl text-accent/20 leading-none select-none">
+            &rdquo;
+          </span>
+        </div>
+      </Link>
 
       <div className="mt-4 flex flex-wrap items-center gap-2 pl-4">
         {tags.map((tag) => (
