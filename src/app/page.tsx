@@ -49,7 +49,7 @@ export default function Home() {
           className="flex-1 rounded-xl border border-border bg-paper px-6 py-5 text-center shadow-md shadow-stone-200/50 hover:shadow-lg hover:border-accent/30 transition-all no-underline"
         >
           <span className="block font-hand text-lg text-accent mb-1">搜索</span>
-          <span className="text-sm text-ink-muted">AI 帮你找</span>
+          <span className="text-sm text-ink-muted">帮你找句子</span>
         </Link>
       </div>
     </div>

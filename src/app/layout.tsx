@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { AuthProvider } from "@/components/auth/session-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-dvh flex flex-col antialiased font-sans">
+        <AuthProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -49,6 +51,7 @@ export default function RootLayout({
             }}
           />
         </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

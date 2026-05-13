@@ -8,6 +8,13 @@
       "when": 1778679442485,
       "tag": "0000_bitter_chameleon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1778683218663,
+      "tag": "0001_wet_daredevil",
+      "breakpoints": true
     }
   ]
 }

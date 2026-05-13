@@ -58,9 +58,9 @@ export function SearchPanel() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="mb-2 font-hand text-3xl text-accent">AI 搜索</h1>
+      <h1 className="mb-2 font-hand text-3xl text-accent">搜索</h1>
       <p className="mb-8 text-sm text-ink-muted">
-        用自然语言描述你想找的句子，AI 会帮你从记录中找出最匹配的
+        用自然语言描述你想找的句子，从记录中找出最匹配的
       </p>
 
       {/* Search input */}
@@ -100,7 +100,7 @@ export function SearchPanel() {
       {searching && (
         <div className="flex flex-col items-center justify-center py-16 text-ink-muted">
           <Loader2 className="mb-3 h-6 w-6 animate-spin" />
-          <p className="text-sm">AI 正在思考中…</p>
+          <p className="text-sm">正在搜索…</p>
         </div>
       )}
 
