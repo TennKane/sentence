@@ -53,11 +53,12 @@ export async function POST(request: NextRequest) {
     .join("\n");
 
   const systemPrompt =
-    "你是一个语句检索助手。你的任务是从用户提供的句子列表中，找出与用户查询最相关的句子。" +
+    "你是一个智能语义检索助手，擅长发现句子之间的语义关联。" +
+    "从用户提供的句子列表中，找出与查询语义相关的句子，包括含义相近、主题相关、同一作者/来源、或者部分关键词匹配的情况。" +
+    "宽松匹配，宁可多抓不要漏过。" +
     "返回结果必须是合法的 JSON 数组格式，不要包含其他内容。" +
-    "每个匹配项包含两个字段：index（数字序号）和 reason（匹配理由，一句话说明为什么这个句子匹配）。" +
-    "如果没有匹配的句子，返回空数组 []。" +
-    "最多返回 5 个最相关的结果。";
+    "每个匹配项包含两个字段：index（数字序号）和 reason（一句话说明匹配理由）。" +
+    "最多返回 5 个最相关的结果，如果没有匹配则返回空数组 []。";
 
   const userPrompt = `## 句子列表\n${sentenceList}\n\n## 用户查询\n${query}\n\n找出与查询最相关的句子，返回 JSON 数组。`;
 
@@ -90,7 +91,8 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const content = data.content?.[0]?.text ?? "[]";
+    const textBlock = data.content?.find((b: { type: string }) => b.type === "text");
+    const content = textBlock?.text ?? "[]";
 
     let matches: { index: number; reason: string }[] = [];
     try {
