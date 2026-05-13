@@ -220,7 +220,7 @@ function ArticleSearch() {
               handleSearch();
             }
           }}
-          placeholder='例如："关于 AI 发展的文章" 或粘贴一段文字查找佐证…'
+          placeholder='例如：关于昆明的文章，或描述雨季的文章'
           rows={3}
           className="w-full rounded-lg border border-border bg-paper p-4 text-ink placeholder:text-ink-muted focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-hidden transition-colors resize-none"
         />
