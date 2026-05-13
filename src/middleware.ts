@@ -6,9 +6,7 @@ export default auth((req) => {
 
   const publicPaths = [
     "/login",
-    "/register",
     "/api/auth",
-    "/api/register",
   ];
 
   const isPublic = publicPaths.some((p) => pathname.startsWith(p));
@@ -19,7 +17,7 @@ export default auth((req) => {
     return Response.redirect(loginUrl);
   }
 
-  if (isLoggedIn && (pathname === "/login" || pathname === "/register")) {
+  if (isLoggedIn && pathname === "/login") {
     return Response.redirect(new URL("/", req.nextUrl.origin));
   }
 });

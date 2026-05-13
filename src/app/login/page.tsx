@@ -83,10 +83,7 @@ function LoginForm() {
       </form>
 
       <p className="mt-6 text-center text-sm text-ink-muted">
-        还没有账号？{" "}
-        <Link href="/register" className="text-accent hover:underline">
-          注册
-        </Link>
+        私人使用，暂不开放注册
       </p>
     </div>
   );

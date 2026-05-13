@@ -56,7 +56,7 @@
 
 ### 已完成（一期）
 
-- [x] **用户认证** — 邮箱注册/登录（next-auth v5 + bcryptjs），路由保护
+- [x] **用户认证** — 邮箱登录（next-auth v5 + bcryptjs），路由保护，暂不开放注册
 - [x] **句子管理** — 增删改查完整 CRUD
 - [x] **句子列表** — 分页展示、按标签过滤、内容搜索
 - [x] **句子表单** — 内容、来源（可选）、标签（可选，逗号分隔），zod 校验
@@ -70,6 +70,46 @@
 - [ ] **数据导入导出**（JSON / Markdown）
 - [ ] **暗色主题优化**
 - [ ] **PWA 支持**
+
+---
+
+## 首次使用
+
+注册已关闭，首次部署后需要手动创建管理员账号。
+
+**本地 SQLite：**
+
+```bash
+node -e "
+const { createClient } = require('@libsql/client');
+const bcrypt = require('bcryptjs');
+const client = createClient({ url: 'file:./data/local.db' });
+const hash = bcrypt.hashSync('你的密码', 10);
+client.execute({
+  sql: 'INSERT INTO users (email, name, password) VALUES (?, ?, ?)',
+  args: ['your@email.com', 'Admin', hash]
+}).then(() => console.log('用户创建成功'));
+"
+```
+
+**Turso（生产环境）：**
+
+```bash
+# 设好 DATABASE_URL 和 DATABASE_AUTH_TOKEN 环境变量后运行
+node -e "
+const { createClient } = require('@libsql/client');
+const bcrypt = require('bcryptjs');
+const client = createClient({
+  url: process.env.DATABASE_URL,
+  authToken: process.env.DATABASE_AUTH_TOKEN
+});
+const hash = bcrypt.hashSync('你的密码', 10);
+client.execute({
+  sql: 'INSERT INTO users (email, name, password) VALUES (?, ?, ?)',
+  args: ['your@email.com', 'Admin', hash]
+}).then(() => console.log('用户创建成功'));
+"
+```
 
 ---
 
