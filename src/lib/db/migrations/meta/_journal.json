@@ -15,6 +15,13 @@
       "when": 1778683218663,
       "tag": "0001_wet_daredevil",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1778688197383,
+      "tag": "0002_broken_blur",
+      "breakpoints": true
     }
   ]
 }
