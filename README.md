@@ -56,16 +56,16 @@
 
 ### 已完成（一期）
 
+- [x] **用户认证** — 邮箱注册/登录（next-auth v5 + bcryptjs），路由保护
 - [x] **句子管理** — 增删改查完整 CRUD
 - [x] **句子列表** — 分页展示、按标签过滤、内容搜索
 - [x] **句子表单** — 内容、来源（可选）、标签（可选，逗号分隔），zod 校验
-- [x] **AI 语义搜索** — 用自然语言描述查找匹配句子，显示匹配理由
+- [x] **语义搜索** — 用自然语言描述查找匹配句子，显示匹配理由
 - [x] **树木纸页风格 UI** — 暖色纸张底色、SVG 纹理、木质 accent、手写体标题、引号装饰
 - [x] **响应式布局** — 适配移动端和桌面端
 
 ### 待后续
 
-- [ ] **用户认证**（next-auth + bcryptjs）
 - [ ] **数据统计**（recharts 月度/标签统计）
 - [ ] **数据导入导出**（JSON / Markdown）
 - [ ] **暗色主题优化**
@@ -152,6 +152,8 @@ ANTHROPIC_API_KEY="your-api-key"
 |------|------|
 | `DATABASE_URL` | `libql://` Turso 数据库地址 |
 | `DATABASE_AUTH_TOKEN` | Turso 认证令牌 |
+| `NEXTAUTH_URL` | Vercel 会自动设置，无需手动填 |
+| `NEXTAUTH_SECRET` | 任意随机字符串，用于加密 session（可用 `openssl rand -hex 32` 生成） |
 | `ANTHROPIC_API_KEY` | Claude API 密钥（可选） |
 
 ---
