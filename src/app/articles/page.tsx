@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArticleCard } from "@/components/article/article-card";
 import { PaperButton } from "@/components/ui/paper-button";
+import { TagFilter } from "@/components/ui/tag-filter";
 import { Loader2, Search, Plus } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -26,6 +27,7 @@ function ArticleListContent() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const pageSize = 20;
 
   const load = useCallback(async () => {
@@ -33,6 +35,7 @@ function ArticleListContent() {
     try {
       const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
       if (tagFilter) params.set("tag", tagFilter);
+      if (selectedTags.length > 0) params.set("tags", selectedTags.join(","));
       if (q.trim()) params.set("q", q.trim());
       const res = await fetch(`/api/articles?${params}`);
       if (!res.ok) throw new Error("加载失败");
@@ -44,7 +47,7 @@ function ArticleListContent() {
     } finally {
       setLoading(false);
     }
-  }, [page, tagFilter, q]);
+  }, [page, tagFilter, q, selectedTags]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -66,7 +69,11 @@ function ArticleListContent() {
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="font-hand text-3xl text-accent">
-          {tagFilter ? `#${tagFilter}` : "文章"}
+          {selectedTags.length > 0
+            ? selectedTags.map((t) => `#${t}`).join(" ")
+            : tagFilter
+              ? `#${tagFilter}`
+              : "文章"}
         </h1>
         <Link href="/record?type=article">
           <PaperButton>
@@ -76,7 +83,7 @@ function ArticleListContent() {
         </Link>
       </div>
 
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
           <input
@@ -87,6 +94,15 @@ function ArticleListContent() {
             className="w-full rounded-lg border border-border bg-paper py-2.5 pl-10 pr-4 text-ink placeholder:text-ink-muted focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-hidden transition-colors"
           />
         </div>
+      </div>
+
+      {/* Tag filter */}
+      <div className="mb-6">
+        <TagFilter
+          tags={selectedTags}
+          onTagsChange={setSelectedTags}
+          onSearch={load}
+        />
       </div>
 
       {loading ? (

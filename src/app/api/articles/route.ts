@@ -7,11 +7,19 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
   const pageSize = Math.min(50, Math.max(1, Number(searchParams.get("pageSize")) || 20));
+  const tagsParam = searchParams.get("tags");
   const tag = searchParams.get("tag");
   const q = searchParams.get("q");
 
   const conditions = [];
-  if (tag) conditions.push(like(articles.tags, `%${tag}%`));
+  if (tagsParam) {
+    const tagList = tagsParam.split(",").map((t) => t.trim()).filter(Boolean).slice(0, 5);
+    for (const t of tagList) {
+      conditions.push(like(articles.tags, `%${t}%`));
+    }
+  } else if (tag) {
+    conditions.push(like(articles.tags, `%${tag}%`));
+  }
   if (q) conditions.push(like(articles.title, `%${q}%`));
 
   const where = conditions.length > 0 ? sql.join(conditions, sql` AND `) : undefined;
