@@ -76,7 +76,7 @@ function SentenceListContent() {
             ? selectedTags.map((t) => `#${t}`).join(" ")
             : tagFilter
               ? `#${tagFilter}`
-              : "所有句子"}
+              : "句子"}
         </h1>
         <Link href="/record?type=sentence">
           <PaperButton>

@@ -55,7 +55,7 @@ export function TagFilter({ tags, onTagsChange, onSearch, maxTags = 5 }: TagFilt
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
         <div
-          className="flex min-h-[42px] cursor-text flex-wrap items-center gap-1.5 rounded-lg border border-border bg-paper px-3 py-2 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20 transition-colors"
+          className="flex min-h-[42px] cursor-text flex-wrap items-center gap-1.5 rounded-lg border border-border bg-paper pl-10 pr-3 py-2 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20 transition-colors"
           onClick={() => inputRef.current?.focus()}
         >
           {tags.map((tag) => (
