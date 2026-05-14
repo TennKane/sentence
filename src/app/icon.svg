@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="cover" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5C4A3A"/>
+      <stop offset="100%" stop-color="#3D2B1F"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5F0E8"/>
+      <stop offset="100%" stop-color="#E8DFD0"/>
+    </linearGradient>
+    <linearGradient id="spine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6B5B4E"/>
+      <stop offset="100%" stop-color="#4A3B2E"/>
+    </linearGradient>
+  </defs>
+  <!-- Left cover -->
+  <path d="M10 20 L50 20 L50 80 L10 75 Z" fill="url(#cover)"/>
+  <!-- Right cover -->
+  <path d="M50 20 L90 20 L90 75 L50 80 Z" fill="url(#cover)"/>
+  <!-- Spine -->
+  <rect x="46" y="18" width="8" height="64" rx="3" fill="url(#spine)"/>
+  <!-- Left pages -->
+  <path d="M14 24 L46 24 L46 76 L14 72 Z" fill="url(#page)"/>
+  <!-- Right pages -->
+  <path d="M54 24 L86 24 L86 72 L54 76 Z" fill="url(#page)"/>
+  <!-- Page lines left -->
+  <line x1="20" y1="34" x2="42" y2="34" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="20" y1="42" x2="42" y2="42" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="20" y1="50" x2="42" y2="50" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="20" y1="58" x2="38" y2="58" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Page lines right -->
+  <line x1="58" y1="34" x2="80" y2="34" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="58" y1="42" x2="80" y2="42" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="58" y1="50" x2="80" y2="50" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="58" y1="58" x2="76" y2="58" stroke="#C4B8A0" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Bookmark (leaf/green accent) -->
+  <path d="M68 18 L72 10 L76 18 L72 14 Z" fill="#4A7C59"/>
+  <!-- Tiny leaf on bookmark -->
+  <path d="M72 10 C74 6 78 6 76 9 C74 12 72 10 72 10 Z" fill="#4A7C59"/>
+</svg>

@@ -9,6 +9,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Remember — 语句摘录",
   description: "记录打动你的每一句话",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({
