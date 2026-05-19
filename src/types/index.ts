@@ -54,6 +54,22 @@ export interface ArticleSearchResponse {
   processingTimeMs: number;
 }
 
+export interface CombinedSearchResult {
+  id: number;
+  type: "sentence" | "article";
+  title?: string;
+  content: string;
+  source: string | null;
+  tags: string | null;
+  reason: string;
+}
+
+export interface CombinedSearchResponse {
+  matches: CombinedSearchResult[];
+  totalProcessed: number;
+  processingTimeMs: number;
+}
+
 export interface ApiError {
   error: string;
 }

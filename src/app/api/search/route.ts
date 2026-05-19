@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     .from(sentences)
     .where(where)
     .orderBy(desc(sentences.createdAt))
-    .limit(10000);
+    .limit(100000);
 
   if (rows.length === 0) {
     return NextResponse.json({
@@ -74,7 +74,8 @@ export async function POST(request: NextRequest) {
         },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 1024,
+          max_tokens: 8192,
+          thinking: { type: "enabled", budget_tokens: 4096 },
           system: systemPrompt,
           messages: [{ role: "user", content: userPrompt }],
         }),
