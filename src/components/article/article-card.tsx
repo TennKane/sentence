@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { PenLine, Trash2, FileText } from "lucide-react";
+import { PenLine, Trash2, FileText, ExternalLink } from "lucide-react";
 import { PaperCard } from "@/components/ui/paper-card";
 import { TagBadge } from "@/components/ui/tag-badge";
+import { LinkifyText, isUrl } from "@/components/ui/linkify-text";
 import { formatRelativeDate } from "@/lib/utils/date";
 import { cn } from "@/lib/utils/cn";
 import type { Article } from "@/types";
@@ -31,7 +32,7 @@ export function ArticleCard({ article, onDelete }: ArticleCardProps) {
               {article.title}
             </h3>
             <p className="mt-1 line-clamp-2 text-sm text-ink-light leading-relaxed group-hover:text-ink transition-colors">
-              {article.content}
+              <LinkifyText text={article.content} />
             </p>
           </Link>
         </div>
@@ -48,8 +49,22 @@ export function ArticleCard({ article, onDelete }: ArticleCardProps) {
       <div className="mt-3 flex items-center justify-between text-xs text-ink-muted">
         <span>
           {article.source && (
-            <span className="mr-3">
-              来自 <span className="text-accent">{article.source}</span>
+            <span className="mr-3 inline-flex items-center gap-1">
+              {isUrl(article.source) ? (
+                <a
+                  href={article.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-0.5 text-accent underline underline-offset-2 decoration-accent/30 hover:decoration-accent transition-colors"
+                >
+                  <ExternalLink className="h-3 w-3 shrink-0" />
+                  {article.source}
+                </a>
+              ) : (
+                <>
+                  来自 <span className="text-accent">{article.source}</span>
+                </>
+              )}
             </span>
           )}
           <span>{formatRelativeDate(article.createdAt)}</span>

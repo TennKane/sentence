@@ -8,6 +8,8 @@ import { TagBadge } from "@/components/ui/tag-badge";
 import { ArrowLeft, Loader2, Trash2, FileText } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { LinkifyText, isUrl } from "@/components/ui/linkify-text";
+import { ExternalLink } from "lucide-react";
 import { formatFullDate } from "@/lib/utils/date";
 import type { Article } from "@/types";
 
@@ -61,7 +63,7 @@ export default function ArticleDetailPage() {
 
         <div className="prose prose-stone max-w-none">
           <p className="whitespace-pre-wrap text-base leading-relaxed text-ink-light">
-            {article.content}
+            <LinkifyText text={article.content} />
           </p>
         </div>
 
@@ -74,7 +76,23 @@ export default function ArticleDetailPage() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-ink-muted">
-          {article.source && <span>来源：<span className="text-accent font-medium">{article.source}</span></span>}
+          {article.source && (
+            <span className="inline-flex items-center gap-1">
+              {isUrl(article.source) ? (
+                <a
+                  href={article.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-accent underline underline-offset-2 decoration-accent/30 hover:decoration-accent transition-colors"
+                >
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                  来源
+                </a>
+              ) : (
+                <>来源：<span className="text-accent font-medium">{article.source}</span></>
+              )}
+            </span>
+          )}
           <span>创建于 {formatFullDate(article.createdAt)}</span>
           {article.updatedAt !== article.createdAt && <span>更新于 {formatFullDate(article.updatedAt)}</span>}
         </div>

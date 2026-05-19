@@ -1,13 +1,15 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PaperInput } from "@/components/ui/paper-input";
 import { PaperTextarea } from "@/components/ui/paper-textarea";
 import { PaperButton } from "@/components/ui/paper-button";
+import { LinkPreview } from "@/components/ui/link-preview";
+import { isUrl } from "@/components/ui/linkify-text";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -30,10 +32,14 @@ interface ArticleFormProps {
 export function ArticleForm({ article, mode }: ArticleFormProps) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const [linkTitle, setLinkTitle] = useState<string | null>(null);
+  const [linkLoading, setLinkLoading] = useState(false);
+  const [linkError, setLinkError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<ArticleFormData>({
     resolver: zodResolver(articleSchema),
@@ -44,6 +50,39 @@ export function ArticleForm({ article, mode }: ArticleFormProps) {
       tags: article?.tags ?? "",
     },
   });
+
+  const sourceValue = useWatch({ control, name: "source" }) ?? "";
+
+  // Fetch link preview when source is a URL
+  useEffect(() => {
+    if (!sourceValue || !isUrl(sourceValue)) {
+      setLinkTitle(null);
+      setLinkLoading(false);
+      setLinkError(null);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setLinkLoading(true);
+      setLinkError(null);
+      try {
+        const res = await fetch("/api/link-preview", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: sourceValue }),
+        });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setLinkTitle(data.title);
+      } catch {
+        setLinkError("无法获取");
+      } finally {
+        setLinkLoading(false);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [sourceValue]);
 
   const onSubmit = useCallback(
     async (data: ArticleFormData) => {
@@ -114,6 +153,7 @@ export function ArticleForm({ article, mode }: ArticleFormProps) {
           {...register("source")}
           error={errors.source?.message}
         />
+        <LinkPreview url={sourceValue} title={linkTitle} loading={linkLoading} error={linkError} />
         <PaperInput
           label="标签（可选，逗号分隔）"
           id="tags"

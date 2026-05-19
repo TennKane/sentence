@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { PenLine, Trash2 } from "lucide-react";
+import { PenLine, Trash2, ExternalLink } from "lucide-react";
 import { PaperCard } from "@/components/ui/paper-card";
 import { TagBadge } from "@/components/ui/tag-badge";
+import { LinkifyText, isUrl } from "@/components/ui/linkify-text";
 import { formatRelativeDate } from "@/lib/utils/date";
 import type { Sentence } from "@/types";
 import { cn } from "@/lib/utils/cn";
@@ -26,7 +27,7 @@ export function SentenceCard({ sentence, onDelete }: SentenceCardProps) {
           </span>
 
           <p className="pl-4 text-lg leading-relaxed text-ink group-hover:text-accent transition-colors">
-            {sentence.content}
+            <LinkifyText text={sentence.content} />
           </p>
 
           <span className="absolute -bottom-4 -right-1 font-hand text-4xl text-accent/20 leading-none select-none">
@@ -46,8 +47,23 @@ export function SentenceCard({ sentence, onDelete }: SentenceCardProps) {
       <div className="mt-3 flex items-center justify-between pl-4 text-xs text-ink-muted">
         <span>
           {sentence.source && (
-            <span className="mr-3">
-              摘自 <span className="text-accent">{sentence.source}</span>
+            <span className="mr-3 inline-flex items-center gap-1">
+              {isUrl(sentence.source) ? (
+                <a
+                  href={sentence.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-0.5 text-accent underline underline-offset-2 decoration-accent/30 hover:decoration-accent transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ExternalLink className="h-3 w-3 shrink-0" />
+                  {sentence.source}
+                </a>
+              ) : (
+                <>
+                  摘自 <span className="text-accent">{sentence.source}</span>
+                </>
+              )}
             </span>
           )}
           <span>{formatRelativeDate(sentence.createdAt)}</span>
